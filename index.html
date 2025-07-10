@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gajula Ranganath - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient-start: #0B0C1A;
+      --bg-gradient-end: #121330;
+      --card-bg: #141527;
+      --card-border: #6B73FF;
+      --primary: #6B73FF;
+      --text-main: #FFFFFF;
+      --text-body: #CCCCCC;
+      --text-sub: #A0A0B0;
+    }
+
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
+      color: var(--text-body);
+      padding-bottom: 100px;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      animation: fadeInTop 1s ease-out forwards;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px #6B73FF;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+    }
+
+    section {
+      background: var(--card-bg);
+      max-width: 960px;
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 18px rgba(107, 115, 255, 0.15);
+      border-left: 2px solid var(--card-border);
+      border-right: 2px solid var(--card-border);
+    }
+
+    section h2 {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 14px;
+      font-size: 1.1rem;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #191A30;
+      color: var(--text-sub);
+      margin-top: 80px;
+      border-top: 1px solid var(--primary);
+      opacity: 0;
+      animation: fadeInDelayed 1s ease-out forwards;
+      animation-delay: 1.5s;
+    }
+
+    /* 🔵 Chatbot Styles & Animations */
+    .chatbot-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--primary);
+      border: none;
+      padding: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: #fff;
+      font-size: 24px;
+      z-index: 9999;
+      animation: bounceIn 0.8s ease-out, pulseGlow 2.5s infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .chatbot-window {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 340px;
+      max-height: 480px;
+      background: #191A30;
+      border: 1px solid var(--primary);
+      border-radius: 10px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 0 25px var(--primary);
+      z-index: 9999;
+      overflow: hidden;
+      animation: chatbotSlideUp 0.4s ease-out;
+    }
+
+    .chatbot-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 12px;
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chatbot-body {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      font-size: 14px;
+      color: var(--text-body);
+    }
+
+    .chatbot-input {
+      display: flex;
+      border-top: 1px solid var(--primary);
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+      background: #121330;
+      color: var(--text-main);
+    }
+
+    .chatbot-input input::placeholder {
+      color: #888;
+    }
+
+    .chatbot-input button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      animation: fadeInMsg 0.3s ease-in;
+    }
+
+    .user {
+      text-align: right;
+      color: var(--primary);
+    }
+
+    .bot {
+      text-align: left;
+      color: var(--text-sub);
+    }
+
+    /* Animations */
+    @keyframes fadeInTop {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDelayed {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-60px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(60px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes zoomFade {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 12px var(--primary); }
+      50% { box-shadow: 0 0 22px var(--primary); }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes chatbotSlideUp {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInMsg {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .animated-section {
+      opacity: 0;
+    }
+
+    .fade-up.animate { animation: fadeInTop 1s ease-out forwards; }
+    .slide-left.animate { animation: slideInLeft 1s ease-out forwards; }
+    .slide-right.animate { animation: slideInRight 1s ease-out forwards; }
+    .zoom.animate { animation: zoomFade 1s ease-out forwards; }
+    .float.animate { animation: floatUp 1.1s ease-out forwards; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Gajula Ranganath</h1>
+  <p>DataAnalyst | ML & Web Dev Enthusiast</p>
+</header>
+
+<section class="animated-section fade-up">
+  <h2>About Me</h2>
+  <p>A passionate and dedicated Data Science student with a strong foundation in analysis, ML, and problem-solving. I build smart, scalable tech and love learning every day.</p>
+</section>
+
+<section class="animated-section slide-left">
+  <h2>Education</h2>
+  <ul>
+    <li><strong>B.Tech - CSE (DS):</strong> St. Johns College, 2022–2026 (81%)</li>
+    <li><strong>Intermediate:</strong> Narayana IIT Academy (88%)</li>
+    <li><strong>SSC:</strong> Good Shepherd EM School (99%)</li>
+  </ul>
+</section>
+
+<section class="animated-section slide-right">
+  <h2>Skills</h2>
+  <ul>
+    <li><span style="color:#6B73FF; font-weight:600;">💻 Programming Languages:</span> C, Python</li>
+    <li><span style="color:#6B73FF; font-weight:600;">🛢 Databases:</span> MySQL, NeonDB</li>
+    <li><span style="color:#6B73FF; font-weight:600;">🛠 Developer Tools:</span> Flask, Render</li>
+    <li><span style="color:#6B73FF; font-weight:600;">📊 Visualization Tools:</span> Tableau, Matplotlib</li>
+    <li><span style="color:#6B73FF; font-weight:600;">🤝 Soft Skills:</span> Leadership, Problem-solving, Teamwork</li>
+  </ul>
+</section>
+
+<section class="animated-section zoom">
+  <h2>Projects</h2>
+  <ul>
+    <li><strong>Gatepass Monitoring System:</strong> <a href="https://gatepass-system-gmz7.onrender.com" target="_blank">Visit</a></li>
+    <li><strong>AI Career Advisor:</strong> <a href="https://smart-career-advisor-6wir.onrender.com" target="_blank">Visit</a></li>
+  </ul>
+</section>
+
+<section class="animated-section float">
+  <h2>Certifications</h2>
+  <ul>
+    <li><a href="https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025032655368470-0168d594-ec95-4e4d-a060-2cd5c4fd6aaa" target="_blank">Data Science for Everyone</a></li>
+    <li>Data Visualization: Empowering Business with Effective Insights</li>
+  </ul>
+</section>
+
+<section class="animated-section fade-up">
+  <h2>Contact</h2>
+  <ul>
+    <li><strong>Email:</strong> <a href="mailto:gajularanganath1464@gmail.com">gajularanganath1464@gmail.com</a></li>
+    <li><strong>Phone:</strong> 9121820724</li>
+    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ranga1464" target="_blank">linkedin.com/in/ranga1464</a></li>
+  </ul>
+</section>
+
+<!-- Chatbot Icon -->
+<button class="chatbot-toggle" onclick="toggleChat()">🤖</button>
+
+<!-- Chatbot Window -->
+<div class="chatbot-window" id="chatbot">
+  <div class="chatbot-header">ChatBot 🤖</div>
+  <div class="chatbot-body" id="chatBody"></div>
+  <div class="chatbot-input">
+    <input type="text" id="chatInput" placeholder="Ask me about skills, projects..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Gajula Ranganath. Futuristically Built.
+</footer>
+
+<script>
+  function toggleChat() {
+    const chat = document.getElementById('chatbot');
+    chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+  }
+
+  function sendMessage() {
+    const input = document.getElementById("chatInput");
+    const body = document.getElementById("chatBody");
+    const userMsg = input.value.trim();
+    if (userMsg === "") return;
+
+    body.innerHTML += `<div class="message user">${userMsg}</div>`;
+    input.value = "";
+
+    let reply = "🤖 Sorry, I didn't understand that. Try asking about skills or projects!";
+    if (userMsg.toLowerCase().includes("skill")) {
+      reply = "🧠 I know Python, C, Flask, MySQL, Tableau, and more!";
+    } else if (userMsg.toLowerCase().includes("project")) {
+      reply = "📂 I've built a Gatepass System and AI Career Advisor. Links are above!";
+    } else if (userMsg.toLowerCase().includes("education")) {
+      reply = "🎓 I'm studying B.Tech CSE (Data Science) with 81% at St. Johns College.";
+    } else if (userMsg.toLowerCase().includes("contact")) {
+      reply = "📧 Email me at gajularanganath1464@gmail.com or call 9121820724.";
+    }
+
+    setTimeout(() => {
+      body.innerHTML += `<div class="message bot">${reply}</div>`;
+      body.scrollTop = body.scrollHeight;
+    }, 400);
+  }
+
+  const animatedSections = document.querySelectorAll(".animated-section");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  animatedSections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>
